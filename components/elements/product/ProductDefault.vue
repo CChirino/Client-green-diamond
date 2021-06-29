@@ -3,7 +3,7 @@
         <div class="ps-product__thumbnail">
             <nuxt-link :to="`/product/${product.id}`">
                 <img
-                    :src="`${baseUrl}${product.thumbnail.url}`"
+                    :src="`${baseUrl2}${product.thumbnail.url}`"
                     alt="martfury"
                 />
             </nuxt-link>
@@ -113,6 +113,7 @@
 <script>
 import { mapState } from 'vuex';
 import { baseUrl } from '~/repositories/Repository';
+import { baseUrl2 } from '~/repositories/Repository';
 import Rating from '../Rating';
 import ProductQuickview from '~/components/elements/detail/ProductQuickview';
 
@@ -133,6 +134,9 @@ export default {
         }),
         baseUrl() {
             return baseUrl;
+        },
+        baseUrl2() {
+            return baseUrl2;
         },
         isSale() {
             if (this.product.is_sale) {

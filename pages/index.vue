@@ -9,9 +9,17 @@
         <home-ads-columns />
         <home-default-top-categories />
         <template v-if="collections !== null">
-            <conumer-electronics collection-slug="consumer-electronics" />
+            <!-- <conumer-electronics collection-slug="consumer-electronics" />
             <clothings collection-slug="clothings" />
-            <garden-and-kitchen collection-slug="garden-and-kitchen" />
+            <garden-and-kitchen collection-slug="garden-and-kitchen" /> -->
+            <landscape collection-slug="landscape" />
+            <!-- <synthetic collection-slug="synthetic-turf" />
+            <garden collection-slug="garden-tools" />
+            <redwoods collection-slug="redwoods" />
+            <irrigation collection-slug="irrigation" />
+            <lighting collection-slug="lighting" />
+            <general collection-slug="general-services" /> -->
+
         </template>
         <home-ads />
         <download-app />
@@ -34,6 +42,13 @@ import NewArrivals from '~/components/partials/homepage/default/NewArrivals';
 import HomeDefaultTopCategories from '~/components/partials/homepage/default/HomeDefaultTopCategories';
 import GardenAndKitchen from '~/components/partials/homepage/default/GardenAndKitchen';
 import Clothings from '~/components/partials/homepage/default/Clothings';
+import Landscape from '~/components/partials/homepage/default/Landscape';
+import Garden from '~/components/partials/homepage/default/Garden';
+import Synthetic from '~/components/partials/homepage/default/Synthetic';
+import Redwoods from '~/components/partials/homepage/default/Synthetic';
+import Irrigation from '~/components/partials/homepage/default/Irrigation';
+import Lighting from '~/components/partials/homepage/default/Lighting';
+import General from '~/components/partials/homepage/default/General';
 import ConumerElectronics from '~/components/partials/homepage/default/ConumerElectronics';
 import HomeBanner from '~/components/partials/homepage/default/HomeBanner';
 import HeaderDefault from '~/components/shared/headers/HeaderDefault';
@@ -62,7 +77,14 @@ export default {
         NewArrivals,
         HomeDefaultTopCategories,
         Clothings,
-        ConumerElectronics
+        ConumerElectronics,
+        Landscape,
+        Synthetic,
+        Garden,
+        Redwoods,
+        Irrigation,
+        Lighting,
+        General,
     },
 
     transition: 'zoom',

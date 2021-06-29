@@ -1,27 +1,26 @@
 <template lang="html">
-    <form  @submit.prevent="login()">
+    <form  v-on:submit.prevent="submitForm">
         <div class="ps-form__content">
             <h5>Log In Your Account</h5>
             <div class="form-group">
                 <v-text-field
                     class="ps-text-field"
-                    :error-messages="usernameErrors"
-                    v-model="login_data.email"
-                    placeholder="Usernamer or email"
                     height="50"
                     outlined
+                    v-model="form.email" type="email" placeholder="Please enter Email"
                 />
+                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
             </div>
             <div class="form-group">
                 <v-text-field
                     type="password"
                     class="ps-text-field"
-                    :error-messages="passwordErrors"
-                    v-model="login_data.password"
                     placeholder="Please enter password"
                     height="50"
                     outlined
+                    v-model="form.password" 
                 />
+                <span class="text-danger" v-if="errors.password"> {{errors.password[0]}} </span>
             </div>
             <div class="form-group">
                 <v-checkbox label="Remember me" color="warning" />
@@ -29,9 +28,7 @@
             <div class="form-group submit">
                 <button
                     type="submit"
-                    class="ps-btn ps-btn--fullwidth"
-                    @click.prevent="handleSubmit"
-                >
+                    class="ps-btn ps-btn--fullwidth">
                     Login
                 </button>
             </div>
@@ -65,55 +62,30 @@
 </template>
 
 <script>
-import { email, required } from 'vuelidate/lib/validators';
-import { validationMixin } from 'vuelidate';
-
+import axios from 'axios';
 export default {
     name: 'Login',
-    computed: {
-        usernameErrors() {
-            const errors = [];
-            if (!this.$v.username.$dirty) return errors;
-            !this.$v.username.required && errors.push('This field is required');
-            return errors;
-        },
-        passwordErrors() {
-            const errors = [];
-            if (!this.$v.password.$dirty) return errors;
-            !this.$v.password.required && errors.push('This field is required');
-            return errors;
-        }
-    },
     data() {
         return {
-            login_data: {
+            form: {
               email: '',
               password: ''
             },
+            errors:{}
         };
     },
-    validations: {
-        username: { required },
-        password: { required }
-    },
     methods: {
-        name: "login",
-        layout: "login",
-        methods: {
-          login() {
-            this.validation_errors = [];
-            this.error_message = '';
-            this.$axios.$post('api/login', this.login_data).then(response => {
-              this.$router.push('/');
-            }).catch(error => {
-              this.error_message = error.response.data.message;
-              if(error.response.data.errors) {
-                for(let key in error.response.data.errors) {
-                  this.validation_errors.push(error.response.data.errors[key][0]);
-                }
-              }
-            });
-          }
+        submitForm(){
+            axios.post('http://127.0.0.1:8000/api/login', this.form)
+                 .then((res) => {
+                     //Perform Success Action
+                       location.replace("http://localhost:4003/")
+                    // location.reload();
+                    // console.log(response.data)
+                 })
+                 .catch(() => {
+                 }).finally(() => {
+                 });
         }
     }
 };

@@ -1,5 +1,5 @@
 <template lang="html">
-    <form @submit.prevent="handleSubmit">
+    <form v-on:submit.prevent="submitForm">
         <div class="ps-form__content">
             <h5>Register An Account</h5>
             <div class="form-group">
@@ -10,6 +10,7 @@
                     outlined
                     height="50"
                 />
+                <span class="text-danger" v-if="errors.name"> {{errors.name[0]}} </span>
             </div>
             <div class="form-group">
                 <v-text-field
@@ -19,15 +20,17 @@
                     outlined
                     height="50"
                 />
+                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
             </div>
             <div class="form-group">
                 <v-text-field
-                    v-model="form.email_verified_at"
+                    v-model="form.email"
                     placeholder="Email Confirmation"
                     class="ps-text-field"
                     outlined
                     height="50"
                 />
+                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
             </div>
             <div class="form-group">
                 <v-text-field
@@ -37,12 +40,12 @@
                     outlined
                     height="50"
                 />
+                <span class="text-danger" v-if="errors.password"> {{errors.password[0]}} </span>
             </div>
             <div class="form-group submit">
                 <button
                     type="submit"
                     class="ps-btn ps-btn--fullwidth"
-                    @click.prevent="handleSubmit"
                 >
                     Register
                 </button>
@@ -78,8 +81,7 @@
 </template>
 
 <script>
-import { email, required } from 'vuelidate/lib/validators';
-import { validationMixin } from 'vuelidate';
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -88,38 +90,27 @@ export default {
                 email: '',
                 email_verified_at: '',
                 password: '',
-            }
+            },
+            errors:{}
         };
     },
-    validations: {
-        name: { required },
-        password: { required },
-        email: { required }
-    },
     methods: {
-      async handleSubmit(e) {
-        try {
-          e.preventDefault();
-          let errors = [];
-          console.log(this.form)
-          await this.$axios.$get('sanctum/csrf-cookie');
-          await this.$axios.post('http://207.244.228.155/api/register', {
-            name: this.form.name,
-            email: this.form.email,
-            password: this.form.password,
-            email_verified_at: this.form.email_verified_at,
-          }).then(function (resp) {
-              console.log(resp)
-          }).catch(function (err) {
-            if (err.response.status = 422) {
-              errors = err.response.data.errors;
-            }
-          });
-          this.errors = errors;
-        } catch (e) {
-          console.log(e)
+    submitForm(){
+            axios.post('http://127.0.0.1:8000/api/register', this.form)
+                 .then((res) => {
+                     //Perform Success Action
+                    // 
+                window.location.replace("http://localhost:4002/");
+
+                 })
+                 .catch((error) => {
+                     if(error.response.data){
+                         this.errors = error.response.data.errors
+                     }
+                      console.log(error.response.data)
+                 }).finally(() => {
+                 });
         }
-      }
     }
 };
 </script>

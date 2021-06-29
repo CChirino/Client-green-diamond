@@ -1,10 +1,9 @@
 <template lang="html">
     <div class="ps-product ps-product--inner">
-        <div class="ps-product__thumbnail">
+        <div class="ps-product__thumbnail" v-for="product in products">
             <nuxt-link :to="`/product/${product.id}`">
                 <img
-                    :src="`${baseUrl}${product.thumbnail.url}`"
-                    alt="martfury"
+                    :src="'http://127.0.0.1:8000/storage/products/' + product.file" 
                 />
             </nuxt-link>
             <div v-if="isSale === true" class="ps-product__badge">sale</div>
@@ -56,9 +55,9 @@
                 </li>
             </ul>
         </div>
-        <div class="ps-product__container">
+        <div class="ps-product__container"  v-for="product in products">
             <nuxt-link to="/shop" class="ps-product__vendor">
-                {{ product.vendor }}
+                {{product.category_name}}                                        
             </nuxt-link>
             <div class="ps-product__content">
                 <p
@@ -67,7 +66,7 @@
                 >
                     {{ currency }}{{ product.price }}
                     <del class="ml-1">
-                        {{ currency }}{{ product.sale_price }}</del
+                        {{ currency }}{{ products.price }}</del
                     >
                     <small>18% off</small>
                 </p>
@@ -78,13 +77,13 @@
                     :to="`/product/${product.id}`"
                     class="ps-product__title"
                 >
-                    {{ product.title }}
+                    {{ product.product_name }}
                 </nuxt-link>
                 <div class="ps-product__rating">
                     <rating />
                     <span>{{ product.ratingCount }}</span>
                 </div>
-                <div class="ps-product__progress-bar ps-progress">
+                <div class="ps-product__progress-bar ps-progress" v-for="product in products">
                     <div class="ps-progress__value">
                         <span :style="{ width: '80%' }"></span>
                     </div>
@@ -92,12 +91,15 @@
                         v-if="product.inventory - product.depot >= 0"
                         class="mb-0"
                     >
-                        Sold: {{ product.inventory - product.depot }}
+                        Inventory: {{ product.quantity }}
                     </p>
-                    <p v-else class="mb-0">Sold: {{ product.inventory }}</p>
+                    <p v-else class="mb-0">Inventory: {{ product.quantity }}</p>
                 </div>
             </div>
         </div>
+        <!-- <div class="ps-product__container"  v-for="product in products" :key="product.id">
+             <img width="150" :src="'http://127.0.0.1:8000/storage/products/' + product.file">
+        </div> -->
         <v-dialog v-model="quickviewDialog" width="1200">
             <div class="ps-dialog">
                 <a
@@ -112,6 +114,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 import { mapState } from 'vuex';
 import { baseUrl } from '~/repositories/Repository';
 import Rating from '../Rating';
@@ -119,6 +122,9 @@ import ProductQuickview from '~/components/elements/detail/ProductQuickview';
 
 export default {
     name: 'ProductInner',
+    created: function() {
+        this.listProducts();
+    },
     components: { ProductQuickview, Rating },
     props: {
         product: {
@@ -149,9 +155,22 @@ export default {
         productModal: false,
         productPreload: true,
         isImageLoaded: false,
-        quickviewDialog: false
+        quickviewDialog: false,
+        products:[], 
     }),
     methods: {
+        listProducts: function(){
+        var url = 'http://127.0.0.1:8000/api/admin/products'
+        axios.get(url,{params: this.pagination}).then(response => {
+                this.products = response.data.data
+        });
+        },
+        listCategories: function(){
+            var url = 'http://127.0.0.1:8000/api/admin/categories/'
+            axios.get(url,{params: this.pagination}).then(response => {
+                    this.categories = response.data.data
+            });
+        },
         handleAddToCart() {
             let item = {
                 id: this.product.id,
@@ -169,14 +188,14 @@ export default {
 
         handleAddItemToWishlist() {
             let item = {
-                id: this.product.id
+                id: this.products.id
             };
 
             this.$store.dispatch('wishlist/addItemToWishlist', item);
             this.$notify({
                 group: 'addCartSuccess',
                 title: 'Add to wishlist!',
-                text: `${this.product.title} has been added to your wishlist !`
+                text: `${this.products.product_name} has been added to your wishlist !`
             });
         },
 

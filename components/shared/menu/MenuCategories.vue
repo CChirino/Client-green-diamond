@@ -9,18 +9,29 @@
                 </nuxt-link>
             </li>
         </template>
+        <!-- <template lang="pug">
+            
+            <li v-for="categories in categories" :key="categories.id" style="padding-top: 10px;padding-bottom: 10px;"> 
+                {{categories.name}}
+            </li>
+        </template> -->
     </ul>
 </template>
 
 <script>
+import axios from 'axios';
 import MenuDefault from '~/components/shared/menu/MenuDefault';
 import MenuDropdown from '~/components/shared/menu/MenuDropdown';
 import MenuMega from '~/components/shared/menu/MenuMega';
 export default {
     name: 'MenuCategories',
+        created: function() {
+        this.listCategories();
+    },
     components: { MenuMega, MenuDropdown, MenuDefault },
     data() {
         return {
+            categories:[], 
             menuCategories: [
                 {
                     icon: 'icon-star',
@@ -251,7 +262,16 @@ export default {
                 }
             ]
         };
-    }
+    },
+    methods: {
+        listCategories: function(){
+            var url = 'http://127.0.0.1:8000/api/collections'
+            axios.get(url,{params: this.pagination}).then(response => {
+                    this.categories = response.data.data
+            });
+        },
+    },
+
 };
 </script>
 

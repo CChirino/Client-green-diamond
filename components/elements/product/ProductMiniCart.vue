@@ -3,7 +3,7 @@
         <div class="ps-product__thumbnail">
             <nuxt-link :to="`/product/${product.id}`">
                 <img
-                    :src="`${baseUrl}${product.thumbnail.url}`"
+                    :src="`${baseUrl2}${product.thumbnail.url}`"
                     alt="martfury"
                 />
             </nuxt-link>
@@ -19,10 +19,10 @@
             <nuxt-link :to="`/product/${product.id}`" class="ps-product__title">
                 {{ product.title }}
             </nuxt-link>
-            <p>
+            <!-- <p>
                 <strong>Sold by:</strong>
                 {{ product.vendor }}
-            </p>
+            </p> -->
             <small v-if="quantity !== null">
                 {{ quantity }} x {{currency}} {{ product.price }}
             </small>
@@ -33,6 +33,7 @@
 <script>
 import { mapState } from 'vuex';
 import { baseUrl } from '~/repositories/Repository';
+import { baseUrl2 } from '~/repositories/Repository';
 export default {
     name: 'ProductMiniCart',
     props: {
@@ -64,6 +65,9 @@ export default {
         },
         baseUrl() {
             return baseUrl;
+        },
+        baseUrl2() {
+            return baseUrl2;
         }
     },
     methods: {

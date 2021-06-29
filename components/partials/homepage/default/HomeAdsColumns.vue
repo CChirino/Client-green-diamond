@@ -6,7 +6,7 @@
                     <nuxt-link to="/shop">
                         <a class="ps-collection">
                             <img
-                                src="/img/collection/home-1/1.jpg"
+                                src="/img/collection/home-1/2-ad.jpeg"
                                 alt="martfury"
                             />
                         </a>
@@ -16,7 +16,7 @@
                     <nuxt-link to="/shop">
                         <a class="ps-collection">
                             <img
-                                src="/img/collection/home-1/2.jpg"
+                                src="/img/collection/home-1/1-ad.jpeg"
                                 alt="martfury"
                             />
                         </a>
@@ -26,7 +26,7 @@
                     <nuxt-link to="/shop">
                         <a class="ps-collection">
                             <img
-                                src="/img/collection/home-1/3.jpg"
+                                src="/img/collection/home-1/4-ad.jpeg"
                                 alt="martfury"
                             />
                         </a>

@@ -8,7 +8,7 @@
                             <div
                                 class="ps-banner"
                                 :style="{
-                                    backgroundImage: `url(/img/slider/home-1/slide-1.jpg)`
+                                    backgroundImage: `url(/img/slider/home-1/slider-1.jpeg)`
                                 }"
                             ></div>
                         </div>
@@ -16,7 +16,7 @@
                             <div
                                 class="ps-banner"
                                 :style="{
-                                    backgroundImage: `url(/img/slider/home-1/slide-2.jpg)`
+                                    backgroundImage: `url(/img/slider/home-1/slider-2.jpeg)`
                                 }"
                             ></div>
                         </div>
@@ -24,7 +24,7 @@
                             <div
                                 class="ps-banner"
                                 :style="{
-                                    backgroundImage: `url(/img/slider/home-1/slide-3.jpg)`
+                                    backgroundImage: `url(/img/slider/home-1/slider-3.jpeg)`
                                 }"
                             ></div>
                         </div>
