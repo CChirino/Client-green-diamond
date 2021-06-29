@@ -1,9 +1,9 @@
 <template lang="html">
     <div class="ps-product ps-product--inner">
-        <div class="ps-product__thumbnail" v-for="product in products">
+        <div class="ps-product__thumbnail">
             <nuxt-link :to="`/product/${product.id}`">
                 <img
-                    :src="'http://127.0.0.1:8000/storage/products/' + product.file" 
+                    :src="`${baseUrl2}${product.thumbnail.url}`"
                 />
             </nuxt-link>
             <div v-if="isSale === true" class="ps-product__badge">sale</div>
@@ -97,9 +97,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="ps-product__container"  v-for="product in products" :key="product.id">
-             <img width="150" :src="'http://127.0.0.1:8000/storage/products/' + product.file">
-        </div> -->
         <v-dialog v-model="quickviewDialog" width="1200">
             <div class="ps-dialog">
                 <a
@@ -117,14 +114,12 @@
 import axios from 'axios';
 import { mapState } from 'vuex';
 import { baseUrl } from '~/repositories/Repository';
+import { baseUrl2 } from '~/repositories/Repository';
 import Rating from '../Rating';
 import ProductQuickview from '~/components/elements/detail/ProductQuickview';
 
 export default {
     name: 'ProductInner',
-    created: function() {
-        this.listProducts();
-    },
     components: { ProductQuickview, Rating },
     props: {
         product: {
@@ -141,6 +136,9 @@ export default {
         }),
         baseUrl() {
             return baseUrl;
+        },
+                baseUrl2() {
+            return baseUrl2;
         },
         isSale() {
             if (this.product.is_sale) {
@@ -159,12 +157,6 @@ export default {
         products:[], 
     }),
     methods: {
-        listProducts: function(){
-        var url = 'http://127.0.0.1:8000/api/admin/products'
-        axios.get(url,{params: this.pagination}).then(response => {
-                this.products = response.data.data
-        });
-        },
         listCategories: function(){
             var url = 'http://127.0.0.1:8000/api/admin/categories/'
             axios.get(url,{params: this.pagination}).then(response => {

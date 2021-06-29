@@ -4,7 +4,7 @@
         <site-feautures-fullwidth />
         <home-default-deal-of-day
             v-if="collections !== null"
-            collection-slug="deal-of-the-day"
+            collection-slug="landscape"
         />
         <home-ads-columns />
         <home-default-top-categories />
@@ -23,10 +23,10 @@
         </template>
         <home-ads />
         <download-app />
-        <new-arrivals
+        <!-- <new-arrivals
             v-if="collections !== null"
             collection-slug="new-arrivals-products"
-        />
+        /> -->
         <newsletters layout="fullwidth"/>
     </main>
 </template>
