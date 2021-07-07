@@ -52,11 +52,9 @@ export default {
         scss: './assets/scss/env.scss'
     },
 
-    modules: ['@nuxtjs/dotenv','@nuxtjs/axios', 'nuxt-i18n'],
+    modules: ['@nuxtjs/dotenv','@nuxtjs/axios', 'nuxt-i18n', '@nuxtjs/auth-next'],
 
-    axios: {
-        baseURL: 'http://207.244.228.155/api', // Used as fallback if no runtime config is provided
-      },
+    axios: {},
     i18n: {
         locales: [
             { code: 'en', file: 'en.json' },
@@ -76,4 +74,32 @@ export default {
         port: 4002,
         host: 'localhost'
     },
+    auth: {
+        strategies: {
+          laravelSanctum: {
+            provider: "laravel/sanctum",
+            url: "http://127.0.0.1:8000/api",
+            endpoints: {
+              login: {
+                url: "/login"
+              },
+              logout: {
+                url: "/logout"
+              },
+              user: {
+                url: "/user"
+              }
+            },
+            user: {
+              property: false
+            }
+          }
+        },
+    
+        redirect: {
+          login: "/account/login",
+          logout: "/",
+          home: "/"
+        }
+      },
 };

@@ -15,7 +15,8 @@
                                     class="swiper-slide"
                                     v-for="image in product.images"
                                 >
-                                    <img :src="`${baseURL}${image.url}`" />
+                                    <img :src="`${baseUrl2}${product.images.url}`"
+                                            alt="martfury" />
                                 </div>
                             </div>
                             <div class="swiper-nav">
@@ -39,7 +40,7 @@
                     class="ps-carousel swiper"
                     v-swiper:swiperVariants="swiperOptionThumbs"
                 >
-                    <div class="swiper-wrapper">
+                    <!-- <div class="swiper-wrapper">
                         <div
                             v-for="(image, index) in product.images"
                             :class="
@@ -49,9 +50,10 @@
                             "
                             @click="handleClickSlide(index)"
                         >
-                            <img :src="`${baseURL}${image.url}`" />
+                            <img  :src="`${baseUrl2}${product.images.url}`"
+                                            alt="martfury"  />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -61,6 +63,8 @@
 <script>
 import { mapState } from 'vuex';
 import { baseUrl } from '~/repositories/Repository';
+import { baseUrl2 } from '~/repositories/Repository';
+
 
 export default {
     name: 'ThumbnailDefault',
@@ -69,7 +73,10 @@ export default {
             product: state => state.product.product,
             baseURL() {
                 return baseUrl;
-            }
+            },
+            baseUrl2() {
+            return baseUrl2;
+        }
         })
     },
     data() {

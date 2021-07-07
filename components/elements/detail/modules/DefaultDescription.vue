@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="ps-product__content">
+    <!-- <div class="ps-product__content">
         <v-tabs background-color="white" color="warning" class="ps-tab-list">
             <v-tab :ripple="false" tag="li">
                 <a class="list-item">Description</a>
@@ -56,7 +56,7 @@
                 </div>
             </v-tab-item>
         </v-tabs>
-    </div>
+    </div> -->
 </template>
 
 <script>

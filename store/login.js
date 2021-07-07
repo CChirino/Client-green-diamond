@@ -15,9 +15,9 @@ export const actions = {
             isLoggedIn: state.isLoggedIn
         };
 
-        this.$cookies.set('auth', cookieParams, {
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7
+        this.$auth.loginWith('laravelSanctum', cookieParams, {
+            data: this.form
+
         });
     }
 };

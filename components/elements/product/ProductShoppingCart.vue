@@ -3,7 +3,7 @@
         <div class="ps-product__thumbnail">
             <nuxt-link :to="`/product/${product.id}`">
                 <img
-                    :src="`${baseUrl}${product.thumbnail.url}`"
+                    :src="`${baseUrl2}${product.thumbnail.url}`"
                     alt="martfury"
                 />
             </nuxt-link>
@@ -18,6 +18,8 @@
 
 <script>
 import { baseUrl } from '~/repositories/Repository';
+import { baseUrl2 } from '~/repositories/Repository';
+
 export default {
     name: 'ProductShoppingCart',
     props: {
@@ -29,6 +31,9 @@ export default {
     computed: {
         baseUrl() {
             return baseUrl;
+        },
+        baseUrl2() {
+            return baseUrl2;
         }
     }
 };

@@ -37,7 +37,7 @@
                                     <product-shopping-cart :product="product" />
                                 </td>
                                 <td class="price">
-                                    $ {{ product.price.toFixed(2) }}
+                                    $ {{ product.price }}
                                 </td>
                                 <td>{{ product.vendor }}</td>
                                 <td>

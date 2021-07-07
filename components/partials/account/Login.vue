@@ -1,34 +1,24 @@
 <template lang="html">
-    <form  v-on:submit.prevent="submitForm">
+    <form >
         <div class="ps-form__content">
             <h5>Log In Your Account</h5>
-            <div class="form-group">
-                <v-text-field
-                    class="ps-text-field"
-                    height="50"
-                    outlined
-                    v-model="form.email" type="email" placeholder="Please enter Email"
-                />
-                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
+            <!-- <div class="form-group">
+                <label for="username">Email</label>
+                <input  v-model="form.email" id="email" class="ps-text-field">
             </div>
             <div class="form-group">
-                <v-text-field
-                    type="password"
-                    class="ps-text-field"
-                    placeholder="Please enter password"
-                    height="50"
-                    outlined
-                    v-model="form.password" 
-                />
-                <span class="text-danger" v-if="errors.password"> {{errors.password[0]}} </span>
+                <label for="password">Password</label>
+                <input v-model="form.password" id="password" class="ps-text-field">
             </div>
             <div class="form-group">
                 <v-checkbox label="Remember me" color="warning" />
-            </div>
+            </div> -->
             <div class="form-group submit">
                 <button
                     type="submit"
-                    class="ps-btn ps-btn--fullwidth">
+                    class="ps-btn ps-btn--fullwidth"
+                    @click.prevent="handleSubmit"
+                >
                     Login
                 </button>
             </div>
@@ -62,31 +52,33 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { email, required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+
 export default {
+    middleware: ["authentication"],
     name: 'Login',
     data() {
         return {
             form: {
-              email: '',
-              password: ''
-            },
-            errors:{}
+                email:'christian@mail.com',
+                password:'123456',
+                }
         };
     },
     methods: {
-        submitForm(){
-            axios.post('http://127.0.0.1:8000/api/login', this.form)
-                 .then((res) => {
-                     //Perform Success Action
-                       location.replace("http://localhost:4003/")
-                    // location.reload();
-                    // console.log(response.data)
-                 })
-                 .catch(() => {
-                 }).finally(() => {
-                 });
+    handleSubmit() {
+                this.$store.dispatch('login/setIsLoggedIn', true);
+                this.$router.push('/');
         }
+    // login() {
+    //   this.$auth
+    //     .loginWith("laravelSanctum", {
+    //       data: this.form
+    //     })
+    //     .then(response => console.log(response))
+    //     .catch(error => console.log(error));
+    // }
     }
 };
 </script>

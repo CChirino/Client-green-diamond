@@ -32,7 +32,7 @@ export const actions = {
             });
         }
         if (auth) {
-            commit('auth/setIsLoggedIn', Boolean(auth.isLoggedIn));
+            commit('login/setIsLoggedIn', Boolean(auth.isLoggedIn));
         }
         if (currency) {
             commit('app/setCurrency', currency.data);

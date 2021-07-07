@@ -1,51 +1,34 @@
 <template lang="html">
-    <form v-on:submit.prevent="submitForm">
+    <form>
         <div class="ps-form__content">
             <h5>Register An Account</h5>
             <div class="form-group">
                 <v-text-field
-                    v-model="form.name"
-                    placeholder="Name"
+                    v-model="username"
+                    :error-messages="usernameErrors"
+                    @input="$v.username.$touch()"
+                    placeholder="Email Address"
                     class="ps-text-field"
                     outlined
                     height="50"
                 />
-                <span class="text-danger" v-if="errors.name"> {{errors.name[0]}} </span>
             </div>
             <div class="form-group">
                 <v-text-field
-                    v-model="form.email"
-                    placeholder="Email"
-                    class="ps-text-field"
-                    outlined
-                    height="50"
-                />
-                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
-            </div>
-            <div class="form-group">
-                <v-text-field
-                    v-model="form.email"
-                    placeholder="Email Confirmation"
-                    class="ps-text-field"
-                    outlined
-                    height="50"
-                />
-                <span class="text-danger" v-if="errors.email"> {{errors.email[0]}} </span>
-            </div>
-            <div class="form-group">
-                <v-text-field
-                    v-model="form.password"
+                    v-model="password"
+                    :error-messages="passwordErrors"
+                    @input="$v.password.$touch()"
                     placeholder="Password"
                     class="ps-text-field"
                     outlined
                     height="50"
                 />
-                <span class="text-danger" v-if="errors.password"> {{errors.password[0]}} </span>
             </div>
             <div class="form-group submit">
                 <button
                     type="submit"
                     class="ps-btn ps-btn--fullwidth"
+                    @click.prevent="handleSubmit"
                 >
                     Register
                 </button>
@@ -81,35 +64,41 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { email, required } from 'vuelidate/lib/validators';
+import { validationMixin } from 'vuelidate';
+
 export default {
+    name: 'Register',
+    computed: {
+        usernameErrors() {
+            const errors = [];
+            if (!this.$v.username.$dirty) return errors;
+            !this.$v.username.required && errors.push('This field is required');
+            return errors;
+        },
+        passwordErrors() {
+            const errors = [];
+            if (!this.$v.password.$dirty) return errors;
+            !this.$v.password.required && errors.push('This field is required');
+            return errors;
+        }
+    },
     data() {
         return {
-            form:{
-                name: '',
-                email: '',
-                email_verified_at: '',
-                password: '',
-            },
-            errors:{}
+            username: null,
+            password: null
         };
     },
+    validations: {
+        username: { required },
+        password: { required }
+    },
     methods: {
-    submitForm(){
-            axios.post('http://127.0.0.1:8000/api/register', this.form)
-                 .then((res) => {
-                     //Perform Success Action
-                    // 
-                window.location.replace("http://localhost:4002/");
-
-                 })
-                 .catch((error) => {
-                     if(error.response.data){
-                         this.errors = error.response.data.errors
-                     }
-                      console.log(error.response.data)
-                 }).finally(() => {
-                 });
+        handleSubmit() {
+            this.$v.$touch();
+            if (!this.$v.$invalid) {
+                this.$router.push('/account/login');
+            }
         }
     }
 };

@@ -14,15 +14,15 @@
                         />
                     </div>
                 </div>
-                <customer-bought
+                <!-- <customer-bought
                     v-if="collections !== null"
                     layout="fullwidth"
                     collection-slug="customer_bought"
-                />
+                /> -->
                 <related-product
                     v-if="collections !== null"
                     layout="fullwidth"
-                    collection-slug="shop-recommend-items"
+                    collection-slug="landscape"
                 />
             </div>
         </div>

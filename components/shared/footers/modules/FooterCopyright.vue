@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="ps-footer__copyright">
-        <p v-html="$t('footer.copyright')">
-
+        <p>
+            © 2020 Tecno Majestic. All Rights Reserved
         </p>
         <p>
             <span>We Using Safe Payment For:</span>

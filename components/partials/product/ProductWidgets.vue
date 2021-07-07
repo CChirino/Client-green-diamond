@@ -15,14 +15,14 @@
                 goods
             </p>
         </aside>
-        <aside class="widget widget_sell-on-site">
+        <!-- <aside class="widget widget_sell-on-site">
             <p>
                 <i class="icon-store"></i> Sell on Martfury?
                 <nuxt-link to="/account/register">
                     <a> Register Now !</a>
                 </nuxt-link>
             </p>
-        </aside>
+        </aside> -->
         <aside class="widget widget_ads">
             <nuxt-link to="/shop">
                 <a>
@@ -33,7 +33,7 @@
                 </a>
             </nuxt-link>
         </aside>
-        <aside class="widget widget_same-brand">
+        <!-- <aside class="widget widget_same-brand">
             <h3>Same Brand</h3>
             <div class="widget__content">
                 <product-default
@@ -42,7 +42,7 @@
                     :key="product.id"
                 />
             </div>
-        </aside>
+        </aside> -->
     </section>
 </template>
 
